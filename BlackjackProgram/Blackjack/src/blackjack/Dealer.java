@@ -4,24 +4,46 @@ import java.util.ArrayList;
 
 public class Dealer
 {
-
-    private ArrayList<Card> hand;
+    public int DealerTotal;
+    private ArrayList<Card> dealersHand;
     
     public Dealer ()
     {
-
-        hand = new ArrayList<Card>();
+        dealersHand = new ArrayList<Card>();
     }
     
     //Draws a card from the deck.
-
-
- 
-    public void addCardToHand(Card drawnCard)
+    public void addCardToHand()
     {
-        hand.add(drawnCard);
-       
-        //maybe fix to output suit of card too
-        System.out.println("Dealer drew: " + drawnCard.getCardValue());
+        Card drawnCard = new Card();
+        dealersHand.add(drawnCard);
+    // adds drawn card to dealers's hand
+        System.out.println("Dealer drew: " + drawnCard.cardValue);
+        DealerTotal += drawnCard.cardValue;
+    }
+    
+    public int getValueOfHand()
+    {
+        int totalValue = 0;
+        
+        for (Card card : dealersHand) {
+            totalValue += card.cardValue;
+        }
+        
+        return totalValue;
+    }  
+    
+    //runs when the player stands. use the player total
+    public void endRound(Player play){
+        while(DealerTotal < play.playerTotal){
+            this.addCardToHand();
+        }
+        if(this.DealerTotal > play.playerTotal && this.DealerTotal <= 21){
+            System.out.println("Dealer Wins");
+        } else if(play.playerTotal > 21){
+            System.out.println("Dealer Wins");
+        } else {
+            System.out.println("Player Wins");
+        }
     }
 }
